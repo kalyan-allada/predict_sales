@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-
-import csv as csv 
+# This script predicts sales based on several store features
 import numpy as np
 import pandas as pd
 import pylab as py
@@ -15,19 +13,17 @@ from sklearn.metrics import r2_score
 from sklearn import neighbors, datasets
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.svm import SVC, SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.ensemble import BaggingRegressor
-from sklearn import svm
 from sklearn.tree import DecisionTreeRegressor
 from sklearn import cross_validation
 from sklearn.metrics import roc_auc_score
 from sklearn import model_selection
 from sklearn.model_selection import GridSearchCV, cross_val_score
 
+# initialize time 
 t0 = time()
 
 types = {'CompetitionOpenSinceYear': np.dtype(int),
@@ -38,7 +34,7 @@ types = {'CompetitionOpenSinceYear': np.dtype(int),
          'PromoInterval': np.dtype(str)}
 
 train_tmp = pd.read_csv("data/train.csv", dtype = types)
-# Save rows with Sales > 0, others dosen't matter
+# Save rows with Sales > 0 (ignore rows with zero sales) 
 train_tmp = train_tmp[train_tmp.Sales > 0]
 store = pd.read_csv("data/store.csv")
 # Merge extra data from store with train set
@@ -96,6 +92,7 @@ test = test.drop(features_drop_store, axis = 1)
 
 print ("Following features will be used: " + str(test.columns.values))
 
+#save values of train and test in an array of lists
 features_train = train.values
 features_test = test.values
 
@@ -112,6 +109,7 @@ cv_score = cross_validation.cross_val_score(clf,features_train, labels_train,cv=
 
 print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()**2))
 
+# fit and predict train set
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_train)
 print ("Training time = " + str(time() - t0))
@@ -125,10 +123,12 @@ rmspe = math.sqrt(rmspe/len(pred))
 
 print('RMSPE on train set = ' + str(round(rmspe,4)))
 
+# predict sales from test set
 pred = clf.predict(features_test)
 pred = np.exp(pred) - 1 # we added 1 earlier to take care of log of zeros
 print('Avg sales for the test period = ' + str(pred.mean()))
 
+# prepare prediction file with store id and future sales
 pred_sales = pd.DataFrame(dict(Sales = pred, Id = test_ID))
 pred_sales = pred_sales.sort_values(by = 'Id')
 pred_sales.to_csv('./sales.csv', index = False)
