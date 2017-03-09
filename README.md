@@ -4,8 +4,8 @@ This project deals with predicting 6 weeks of daily sales in advance for Rossman
 
 #### Files:
 - **exploratory_analysis.ipynb** : A python nobebook for exploring the data and building features as necessary
-- **predict_sales.py** : Script which does the actual prediction
-- **sales.csv** : Output of the predict_sales.py script containing the actual sales
-- **README.md** : This file
-- **data** : This is the data folder, not included here. This can be downloaded from [here](https://www.kaggle.com/c/rossmann-store-sales/data). A description of data fields are also present at this link.
+- **predict_sales.py** : Script which does the actual predictions
+- **sales.csv** : Output of the predict_sales.py script containing actual sales
+- **README.md** : You are reading this file
+- **data** : This is the data folder, not included here. The data can be downloaded from [here](https://www.kaggle.com/c/rossmann-store-sales/data). A description of the data fields are also present at this link.
 
