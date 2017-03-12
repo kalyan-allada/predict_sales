@@ -4,9 +4,9 @@ The aim of this project is to predict daily sales in advance for Rossmann drug s
 
 #### Installation
 - Clone this repo to your computer
-- Change directory "cd predict_sales"
-- Run "mkdir data" and download the csv data files from [here](https://www.kaggle.com/c/rossmann-store-sales/data) into this directory
-- Install the requirements using "pip install -r requirements.txt" if moduels are not already exisiting 
+- Change directory `cd predict_sales`
+- Run `mkdir data` and download the csv data files from [here](https://www.kaggle.com/c/rossmann-store-sales/data) into this directory
+- Install the requirements using `pip install -r requirements.txt` if moduels are not already exisiting 
 
 #### Files
 - **exploratory_analysis.ipynb** : A python nobebook for exploring the data and building features as necessary
