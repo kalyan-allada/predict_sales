@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # This script predicts sales based on several store features
+
 import numpy as np
 import pandas as pd
 import pylab as py
@@ -18,10 +19,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.tree import DecisionTreeRegressor
-from sklearn import cross_validation
 from sklearn.metrics import roc_auc_score
 from sklearn import model_selection
-from sklearn.model_selection import GridSearchCV, cross_val_score
+from sklearn.model_selection import GridSearchCV, cross_val_score, ShuffleSplit
 
 # initialize time 
 t0 = time()
@@ -103,13 +103,23 @@ clf = RandomForestRegressor(n_estimators = 10, n_jobs = -1, max_depth = 2000)
 #clf = AdaBoostRegressor(n_estimators = 100)
 
 
+#Lets do grid search to find best parameters
+#comment this part when best parameters are found
+#params = {"n_estimators":[10, 20, 50],
+#          "min_samples_split":[5, 10, 50]}
+#cv_rf = GridSearchCV(clf, param_grid=params, n_jobs=1, cv=3)
+#cv_rf.fit(features_train, labels_train)
+#print cv_rf.best_params_
+#print cv_rf.best_estimator_
+
+
 # Cross-validation
-cv_ss = cross_validation.ShuffleSplit(len(labels_train), n_iter=5, test_size=0.4, random_state=0)
-cv_score = cross_validation.cross_val_score(clf,features_train, labels_train,cv=cv_ss, scoring = 'r2')
+cv_ss = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3)
+cv_score = cross_val_score(clf,features_train, labels_train,cv=cv_ss, scoring = 'r2')
 
-print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()**2))
+print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()))
 
-# fit and predict train set
+#fit and predict train set
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_train)
 print ("Training time = " + str(time() - t0))
