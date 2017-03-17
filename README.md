@@ -16,9 +16,9 @@ The aim of this project is to predict daily sales in advance for Rossmann drug s
 - **data** : This is the data folder, not included here. The data can be downloaded from this [link](https://www.kaggle.com/c/rossmann-store-sales/data). A description of the data fields are also present at this link.
 
 #### Summary
-We built a model to predict daily sales of 1115 Rossmann drug stores. The accuracy of prediction is about 85%. This accuracy was achieved using only four features - *'Store', 'DayOfWeek', 'Promo', 'Year'*. Additional features do not improve the model very much, infact they worsen the accuracy of prediction. It looks like store promotions have biggest impact on daily sales.
+We built a model to predict daily sales of 1115 Rossmann drug stores across Germany. We tried different regression models such as Linear Regressor, GradientBoost and AdaBoost and found that Random Forest regressor does better than others. The accuracy of prediction is about 85%. This accuracy was achieved using only four features - *'Store', 'DayOfWeek', 'Promo', 'Year'*. Additional features do not improve the model very much, infact they worsen the accuracy of prediction. The analysis show that store promotions have biggest impact on daily sales. 
 
-In this model have not made use of the time-dependent nature of the data very much, except the *'Year'* feature. Since store sales can depend on short-term history, one can use tools of time-series analysis to further study and possibly improve the model. 
+In this model have not made use of the time-dependent nature of the data very much, except the *'Year'* feature. Since store sales can depend on short-term history, one can use powerful tools of time-series analysis (autoregression) to further study and possibly improve the model. 
 
 This model can be easily embbeded in a web application (for example, using python Flask and AWS) which can be used by store managers to plan ahead with their inventory requirements.   
  
