@@ -18,7 +18,7 @@ The aim of this project is to predict daily sales in advance for Rossmann drug s
 #### Summary
 We built a model to predict daily sales of 1115 Rossmann drug stores across Germany. We tried different regression models such as Linear Regressor, GradientBoost and AdaBoost and found that Random Forest Regressor does better than others. The accuracy of prediction is about 85%. This accuracy was achieved using only four features - *'Store', 'DayOfWeek', 'Promo', 'Year'*. Additional features do not improve the model very much, infact they worsen the accuracy of prediction. The analysis show that store promotions have biggest impact on daily sales. 
 
-In this model have not made use of the time-dependent nature of the data very much, except the feature *'Year'*. Since store sales can depend on short-term history, one can use powerful tools of time-series analysis (for example, autoregression) to further improve the model. 
+In this model have not made use of the time-dependent nature of the data very much, except the *'Year'* feature. Since store sales can depend on short-term history one can use time-series analysis (for example, autoregression) to further check/improve the model. 
 
 This model can be easily embbeded in a web application (for example, using python Flask and AWS) which can be used by store managers to plan ahead with their inventory requirements.   
  
