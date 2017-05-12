@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
+import math
 
 #import sklearn modules
 from sklearn.linear_model import LinearRegression
