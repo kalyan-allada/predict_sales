@@ -3,24 +3,18 @@
 
 import numpy as np
 import pandas as pd
-import pylab as py
 import matplotlib.pyplot as plt
-import math
 import datetime
 from time import time
 
 #import sklearn modules
-from sklearn.metrics import r2_score
-from sklearn import neighbors, datasets
-from sklearn.naive_bayes import GaussianNB
-from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import AdaBoostRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import AdaBoostRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import roc_auc_score
 from sklearn import model_selection
+from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV, cross_val_score, ShuffleSplit
 
 # initialize time 
@@ -70,25 +64,24 @@ test['Year'] = pd.to_datetime(test['Date']).dt.year
       
 #Use log of sales
 train['Sales'] = np.log(train['Sales']+1)
-
 average_sales = np.exp(train['Sales'].mean())
 print ("Average sales : " + str(average_sales))
 
 labels_train = train['Sales'].values
-     
-features_drop_store = ['StoreType', 'Assortment', 'CompetitionDistance', 'CompetitionOpenSinceMonth', 'CompetitionOpenSinceYear', 'Promo2SinceWeek', 'Promo2SinceYear', 'PromoInterval', 'Promo2']
-features_drop_train = ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Customers', 'Sales']
-features_drop_test =  ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Id']
+  
+features_to_drop_store = ['StoreType', 'Assortment', 'CompetitionDistance', 'CompetitionOpenSinceMonth', 'CompetitionOpenSinceYear', 'Promo2SinceWeek', 'Promo2SinceYear', 'PromoInterval', 'Promo2']
+features_to_drop_train = ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Customers', 'Sales']
+features_to_drop_test =  ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Id']
 
      
-train = train.drop(features_drop_train, axis = 1)
-train = train.drop(features_drop_store, axis = 1)
+train = train.drop(features_to_drop_train, axis = 1)
+train = train.drop(features_to_drop_store, axis = 1)
 
 # Save Id before dropping
 test_ID = test['Id']
 
-test = test.drop(features_drop_test, axis = 1)
-test = test.drop(features_drop_store, axis = 1)
+test = test.drop(features_to_drop_test, axis = 1)
+test = test.drop(features_to_drop_store, axis = 1)
 
 print ("Following features will be used: " + str(test.columns.values))
 
@@ -114,8 +107,8 @@ clf = RandomForestRegressor(n_estimators = 10, n_jobs = -1, max_depth = 2000)
 
 
 # Cross-validation
-cv_ss = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3)
-cv_score = cross_val_score(clf,features_train, labels_train,cv=cv_ss, scoring = 'r2')
+cv_ssplit = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3)
+cv_score = cross_val_score(clf,features_train, labels_train,cv=cv_ssplit, scoring = 'r2')
 
 print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()))
 
