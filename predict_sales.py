@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
-from time import time
 
 #import sklearn modules
 from sklearn.linear_model import LinearRegression
@@ -17,8 +16,6 @@ from sklearn import model_selection
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV, cross_val_score, ShuffleSplit
 
-# initialize time 
-t0 = time()
 
 types = {'CompetitionOpenSinceYear': np.dtype(int),
          'CompetitionOpenSinceMonth': np.dtype(int),
@@ -107,7 +104,7 @@ clf = RandomForestRegressor(n_estimators = 10, n_jobs = -1, max_depth = 2000)
 
 
 # Cross-validation
-cv_ssplit = ShuffleSplit(n_splits=5, test_size=0.3, random_state=3)
+cv_ssplit = ShuffleSplit(n_splits=5, test_size=0.2, random_state=3)
 cv_score = cross_val_score(clf,features_train, labels_train,cv=cv_ssplit, scoring = 'r2')
 
 print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()))
@@ -115,7 +112,6 @@ print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()))
 #fit and predict train set
 clf = clf.fit(features_train, labels_train)
 pred = clf.predict(features_train)
-print ("Training time = " + str(time() - t0))
 
 # Calculate Root Mean Squared Percentage Error for training set ;
 # RMSPE = sqrt(sum(((yi-yi_hat)/yi)**2)/n)
