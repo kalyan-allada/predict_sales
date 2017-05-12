@@ -71,7 +71,6 @@ features_to_drop_store = ['StoreType', 'Assortment', 'CompetitionDistance', 'Com
 features_to_drop_train = ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Customers', 'Sales']
 features_to_drop_test =  ['StateHoliday', 'Open', 'SchoolHoliday', 'Date', 'Id']
 
-     
 train = train.drop(features_to_drop_train, axis = 1)
 train = train.drop(features_to_drop_store, axis = 1)
 
@@ -112,14 +111,14 @@ print ("Average accuracy: %0.4f +/- %0.4f" % (cv_score.mean(), cv_score.std()))
 
 #fit and predict train set
 clf = clf.fit(features_train, labels_train)
-pred = clf.predict(features_train)
+pred_train = clf.predict(features_train)
 
 # Calculate Root Mean Squared Percentage Error for training set ;
 # RMSPE = sqrt(sum(((yi-yi_hat)/yi)**2)/n)
 rmspe = 0
-for i in range(1,len(pred)):
-    rmspe = rmspe + ((np.exp(labels_train[i]) - np.exp(pred[i]))/np.exp(labels_train[i]))**2
-rmspe = math.sqrt(rmspe/len(pred))
+for i in range(1,len(pred_train)):
+    rmspe = rmspe + ((np.exp(labels_train[i]) - np.exp(pred_train[i]))/np.exp(labels_train[i]))**2
+rmspe = math.sqrt(rmspe/len(pred_train))
 
 print('RMSPE on train set = ' + str(round(rmspe,4)))
 
