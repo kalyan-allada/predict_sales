@@ -127,12 +127,11 @@ rmspe = math.sqrt(rmspe/len(pred))
 print('RMSPE on train set = ' + str(round(rmspe,4)))
 
 # predict sales from test set
-pred = clf.predict(features_test)
-pred = np.exp(pred) - 1 # we added 1 earlier to take care of log of zeros
-print('Avg sales for the test period = ' + str(pred.mean()))
+pred_test = clf.predict(features_test)
+pred_test = np.exp(pred_test) - 1 # we added 1 earlier to take care of log of zeros
 
 # prepare prediction file with store id and future sales
-pred_sales = pd.DataFrame(dict(Sales = pred, Id = test_ID))
+pred_sales = pd.DataFrame(dict(Sales = pred_test, Id = test_ID))
 pred_sales = pred_sales.sort_values(by = 'Id')
 pred_sales.to_csv('./sales.csv', index = False)
 
